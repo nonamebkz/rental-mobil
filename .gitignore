@@ -1,0 +1,9 @@
+/vendor/
+.env
+.env.*
+
+# OS and IDE specific files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/ 
