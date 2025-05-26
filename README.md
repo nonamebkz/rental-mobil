@@ -72,4 +72,18 @@ To run this application locally using XAMPP, follow these steps:
 3.  **Start Apache and MySQL:** Open the XAMPP Control Panel and start the Apache and MySQL modules.
 4.  **Access the Application:** Open your web browser and navigate to `http://localhost/ecom_ok/`. If you copied the files into a different folder name inside `htdocs`, replace `ecom_ok` with that folder name.
 
-Alternatively, you can configure a virtual host for a cleaner URL. 
+Alternatively, you can configure a virtual host for a cleaner URL.
+
+## Default Credentials
+
+For testing and initial access, you can use the following default login credentials:
+
+*   **Admin User:**
+    *   Username: `admin`
+    *   Password: `demo`
+
+*   **Demo User:**
+    *   Username: `demo`
+    *   Password: `demo`
+
+**Note:** It is highly recommended to change these default credentials immediately after setting up the application for security reasons. 
