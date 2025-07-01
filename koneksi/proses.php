@@ -62,6 +62,14 @@ if ($_GET['id'] == 'booking') {
     $data[] = $_POST['id_login'];
     $data[] = $_POST['id_mobil'];
     $data[] = $_POST['ktp'];
+    
+    // Handle KTP file upload
+    $ktp_file = $_FILES['ktp_file']['name'];
+    $tmp_name = $_FILES['ktp_file']['tmp_name'];
+    $upload_dir = '../assets/image/';
+    move_uploaded_file($tmp_name, $upload_dir . $ktp_file);
+    $data[] = $ktp_file; // Add KTP filename to data
+
     $data[] = $_POST['nama'];
     $data[] = $_POST['alamat'];
     $data[] = $_POST['no_tlp'];
@@ -75,11 +83,12 @@ if ($_GET['id'] == 'booking') {
     id_login, 
     id_mobil, 
     ktp, 
+    ktp_file, 
     nama, 
     alamat, 
     no_tlp, 
     tanggal, lama_sewa, total_harga, konfirmasi_pembayaran, tgl_input) 
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $row = $koneksi->prepare($sql);
     $row->execute($data);
 

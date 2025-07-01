@@ -41,10 +41,11 @@
     <div class="col-sm-8">
          <div class="card">
            <div class="card-body">
-               <form method="post" action="koneksi/proses.php?id=booking">
+               <form method="post" action="koneksi/proses.php?id=booking" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="">KTP</label>
-                      <input type="text" name="ktp" id="" required class="form-control" placeholder="KTP / NIK Anda">
+                      <input type="file" name="ktp_file" id="" required class="form-control">
+                      <small class="form-text text-muted">Upload gambar KTP Anda.</small>
                     </div> 
                     <div class="form-group">
                       <label for="">Nama</label>
