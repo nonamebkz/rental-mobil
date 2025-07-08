@@ -3,7 +3,7 @@
 
     $user =  'root';
     $pass = 'password';
-    $host = 'localhost';
+    $host = 'mysql-db-1';
     $dbname = 'rental_mobil';
 
     $koneksi = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
