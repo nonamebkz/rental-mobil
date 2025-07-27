@@ -1,5 +1,9 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
+ini_set('display_startup_errors', 'On');
+
 require 'koneksi.php';
 if ($_GET['id'] == 'login') {
     $user = $_POST['user'];
@@ -54,6 +58,7 @@ if ($_GET['id'] == 'daftar') {
 }
 
 if ($_GET['id'] == 'booking') {
+    // Debugging values
     $total = $_POST['total_harga'] * $_POST['lama_sewa'];
     $unik  = random_int(100, 999);
     $total_harga = $total + $unik;
@@ -61,14 +66,26 @@ if ($_GET['id'] == 'booking') {
     $data[] = time();
     $data[] = $_POST['id_login'];
     $data[] = $_POST['id_mobil'];
-    $data[] = $_POST['ktp'];
-    
+    $data[] = $_POST['nik'];
     // Handle KTP file upload
-    $ktp_file = $_FILES['ktp_file']['name'];
-    $tmp_name = $_FILES['ktp_file']['tmp_name'];
-    $upload_dir = '../assets/image/';
-    move_uploaded_file($tmp_name, $upload_dir . $ktp_file);
+    $ktp_file = ''; // Initialize with empty string
+    if (isset($_FILES['ktp_file']) && $_FILES['ktp_file']['error'] == UPLOAD_ERR_OK) {
+        $ktp_file = $_FILES['ktp_file']['name'];
+        $tmp_name = $_FILES['ktp_file']['tmp_name'];
+        $upload_dir = '../assets/image/';
+        move_uploaded_file($tmp_name, $upload_dir . $ktp_file);
+    }
     $data[] = $ktp_file; // Add KTP filename to data
+
+    // Handle NPWP file upload
+    $npwp_file = ''; // Initialize with empty string
+    if (isset($_FILES['npwp_file']) && $_FILES['npwp_file']['error'] == UPLOAD_ERR_OK) {
+        $npwp_file = $_FILES['npwp_file']['name'];
+        $tmp_name_npwp = $_FILES['npwp_file']['tmp_name'];
+        $upload_dir_npwp = '../assets/image/';
+        move_uploaded_file($tmp_name_npwp, $upload_dir_npwp . $npwp_file);
+    }
+    $data[] = $npwp_file; // Add NPWP filename to data
 
     $data[] = $_POST['nama'];
     $data[] = $_POST['alamat'];
@@ -84,12 +101,28 @@ if ($_GET['id'] == 'booking') {
     id_mobil, 
     ktp, 
     ktp_file, 
+    npwp_file, 
     nama, 
     alamat, 
     no_tlp, 
     tanggal, lama_sewa, total_harga, konfirmasi_pembayaran, tgl_input) 
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $row = $koneksi->prepare($sql);
+    if (!$row) {
+        die("Prepare failed: " . $koneksi->errorInfo());
+    }
+    // Construct the debug SQL with values
+    $debug_sql = $sql;
+    $i = 0;
+    foreach ($data as $value) {
+        if (is_string($value)) {
+            $value = "'" . $value . "'"; // Quote string values
+        }
+        $debug_sql = preg_replace('/\?/', $value, $debug_sql, 1); // Replace one at a time
+        $i++;
+    }
+
+
     $row->execute($data);
 
     echo '<script>alert("Anda Sukses Booking silahkan Melakukan Pembayaran");
@@ -104,9 +137,19 @@ ini_set('display_errors', 'On');
     $data[] = $_POST['nama'];
     $data[] = $_POST['nominal'];
     $data[] = $_POST['tgl'];
+    // Handle bukti_bayar file upload
+    $bukti_bayar_file = ''; // Initialize with empty string
+    if (isset($_FILES['bukti_bayar']) && $_FILES['bukti_bayar']['error'] == UPLOAD_ERR_OK) {
+        $bukti_bayar_file = $_FILES['bukti_bayar']['name'];
+        $tmp_name_bukti_bayar = $_FILES['bukti_bayar']['tmp_name'];
+        $upload_dir_bukti_bayar = '../uploads/';
+        move_uploaded_file($tmp_name_bukti_bayar, $upload_dir_bukti_bayar . $bukti_bayar_file);
+    }
+    $data[] = $bukti_bayar_file; // Add bukti_bayar filename to data
 
-    $sql = "INSERT INTO `pembayaran`(`id_booking`, `no_rekening`, `nama_rekening`, `nominal`, `tanggal`) 
-    VALUES (?,?,?,?,?)";
+    $sql = "INSERT INTO `pembayaran`(`id_booking`, 
+    `no_rekening`, `nama_rekening`, `nominal`, `tanggal`, `bukti_bayar`) 
+    VALUES (?,?,?,?,?,?)";
     $row = $koneksi->prepare($sql);
     if (!$row) {
         die("Prepare failed: " . $koneksi->errorInfo());

@@ -45,13 +45,18 @@
                     <div class="form-group">
                       <label for="">KTP</label>
                       <div class="input-group">
-                        <input type="file" name="ktp_file" id="ktp_file" required class="form-control">
+                        <input type="file" name="ktp_file" id="ktp_file" class="form-control">
                         <div class="input-group-append">
                           <button type="button" id="extract_ocr" class="btn btn-info">Extract OCR</button>
                         </div>
                       </div>
                       <small class="form-text text-muted">Upload gambar KTP Anda.</small>
                     </div> 
+                    <div class="form-group">
+                      <label for="">NPWP (Optional)</label>
+                      <input type="file" name="npwp_file" id="npwp_file" class="form-control">
+                      <small class="form-text text-muted">Upload gambar NPWP Anda (Opsional).</small>
+                    </div>
                     <div class="form-group">
                       <label for="">NIK</label>
                       <input type="text" name="nik" id="nik" required class="form-control" placeholder="Nomor NIK">

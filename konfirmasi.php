@@ -31,7 +31,7 @@
     <div class="col-sm-8">
          <div class="card">
            <div class="card-body">
-               <form method="post" action="koneksi/proses.php?id=konfirmasi">
+               <form method="post" action="koneksi/proses.php?id=konfirmasi" enctype="multipart/form-data">
                     <table class="table">
                         <tr>
                             <td>Kode Booking  </td>
@@ -57,6 +57,11 @@
                             <td>Tanggal  Transfer</td>
                             <td> :</td>
                             <td><input type="date" name="tgl" required class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td>Bukti Pembayaran</td>
+                            <td> :</td>
+                            <td><input type="file" name="bukti_bayar" required class="form-control"></td>
                         </tr>
                         <tr>
                             <td>Total yg Harus di Bayar </td>
